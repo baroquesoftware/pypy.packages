@@ -7,7 +7,7 @@ RUN apt-get install -y wget
 RUN apt-get install -y gcc
 RUN apt-get install -y pypy-dev
 
-RUN apt-get install -y libxml-dev
+RUN apt-get install -y libxml2-dev
 RUN apt-get install -y libssl-dev
 
 RUN add-apt-repository ppa:pypy/ppa
