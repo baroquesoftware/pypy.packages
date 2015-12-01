@@ -7,8 +7,8 @@ import shutil
 import xmlrpclib
 
 PYPI = xmlrpclib.ServerProxy('https://pypi.python.org/pypi')
-PATH = "logs"
-PIP_CACHE = "/home/vagrant/pipcache"
+PATH = "/tmp/pypy.space"
+PIP_CACHE = "/tmp/pipcache"
 DOWNLOAD_PROCESSES = 10
 
 
@@ -50,4 +50,4 @@ if __name__ == '__main__':
                              "count": count,
                              "log": output_log}))
 
-    json.dump(index, open("index.json", "w"), indent=2)
+    json.dump(index, open(os.path.join(PATH, "index.json"), 'w'), indent=2)
