@@ -41,9 +41,9 @@ if __name__ == '__main__':
     index = []
 
     for name, status, output, count in results:
-        output_log = os.path.join(PATH, '%s.log' % name)
+        output_log = '%s.txt' % name
 
-        with open(output_log, 'w') as f:
+        with open(os.path.join(PATH, output_log), 'w') as f:
             f.write(output)
 
         index.append((name, {"status": status,
