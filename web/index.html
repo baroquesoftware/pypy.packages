@@ -20,38 +20,32 @@
   </head>
 
   <body ng-controller="main">
+    <div class="container">
 
-    <div class="site-wrapper">
-
-      <div class="site-wrapper-inner">
-
-        <div class="cover-container">
-
-          <div class="inner cover">
-            <h1 class="cover-heading">PyPy's Python packages compatibility</h1>
-
-	    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Pypy_logo.png"/>
-	    
-            <p class="lead">
-	      This is a list of packages that install on pypy taken from the top 1000 out of PyPI.
-              This list is done automatically, however we can make manual overrides as well as add
-              additional info and install additional packages. Issue a <a href="https://github.com/baroquesoftware/pypy.packages">pull request</a> or get in touch using <a href="mailto:contact@baroquesoftware.com">email</a>.
-	    </p>
-
-	    <div class="list-group itemlist">
-	      <a href="" class="list-group-item extras" ng-repeat="item in packages" ng-class=" {true:'selected', false:'not-selected'}[{{ item[1].status == 0 }}]">
-		<h4 class="list-group-item-heading" ng-click="show(item)">
-		  {{ item[0] }}
-		  <span class="badge pull-right">downloads: {{ item[1].count }}</span>
-		</h4>
-		<pre ng-show="item[1].show" class="list-group-item-text">{{ item[1].log }}</pre>
-	      </a>
-	    </div>
-	  </div>
-        </div>
-
+      <div class="text-center">
+	   <h1 class="cover-heading">PyPy's Python packages compatibility</h1>
+	   
+	   <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Pypy_logo.png"/>
       </div>
+    
+      <p class="lead">
+	This is a list of packages that install on pypy taken from the top 1000 out of PyPI.
+        This list is done automatically, however we can make manual overrides as well as add
+        additional info and install additional packages. Issue a
+	<a href="https://github.com/baroquesoftware/pypy.packages">pull request</a> or get in touch using
+	<a href="mailto:contact@baroquesoftware.com">email</a>.
+      </p>
 
+      <div class="list-group">
+	<div href="" class="list-group-item" ng-repeat="item in packages" 
+	     ng-class="{'list-group-item-success': item[1].status == 0, 'list-group-item-danger': item[1].status != 0}">
+	  <h4 class="list-group-item-heading" ng-click="show(item)">
+	    {{ item[0] }}
+	    <span class="badge pull-right">downloads: {{ item[1].count }}</span>
+	  </h4>
+	  <pre ng-show="item[1].show" class="list-group-item-text">{{ item[1].log }}</pre>
+	</div>
+      </div>
     </div>
 
   </body>
