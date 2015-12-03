@@ -9,7 +9,7 @@ var app = angular.module('app', [
 
 app.controller('main', function ($scope, $http) {
     $http.get('logs/index.json').then(function(response) {
-        $scope.packages = response.data;
+       $scope.packages = response.data;
     });
 
     $scope.show = function(item) {

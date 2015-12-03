@@ -15,6 +15,7 @@
     <script src="app.js"></script>
 
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="custom.css" rel="stylesheet">
 
   </head>
 
@@ -32,17 +33,16 @@
 	    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Pypy_logo.png"/>
 	    
             <p class="lead">
-	      Cover is a one-page template for building simple and beautiful home pages.
-	      Download, edit the text,
-	      and add your own fullscreen background photo to make it your own.
+	      This is a list of packages that install on pypy taken from the top 1000 out of PyPI.
+              This list is done automatically, however we can make manual overrides as well as add
+              additional info and install additional packages. Issue a <a href="https://github.com/baroquesoftware/pypy.packages">pull request</a> or get in touch using <a href="mailto:contact@baroquesoftware.com">email</a>.
 	    </p>
 
-	    <div class="list-group">
-	      <a href="" class="list-group-item" ng-repeat="item in packages" ng-class="{'list-group-item-danger': item[1].status != 0}">
+	    <div class="list-group itemlist">
+	      <a href="" class="list-group-item extras" ng-repeat="item in packages" ng-class=" {true:'selected', false:'not-selected'}[{{ item[1].status == 0 }}]">
 		<h4 class="list-group-item-heading" ng-click="show(item)">
 		  {{ item[0] }}
-		  <span class="badge">OK: {{ item[1].status == 0 }}</span>
-		  <span class="badge pull-right">{{ item[1].count }}</span>
+		  <span class="badge pull-right">downloads: {{ item[1].count }}</span>
 		</h4>
 		<pre ng-show="item[1].show" class="list-group-item-text">{{ item[1].log }}</pre>
 	      </a>

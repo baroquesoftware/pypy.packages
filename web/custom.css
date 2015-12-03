@@ -1,0 +1,19 @@
+.selected {
+  background-color: #11CC11;
+}
+.not-selected {
+  background-color: #CC1111;
+}
+.itemlist {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.extras {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.cover-container {
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 30%;
+}
