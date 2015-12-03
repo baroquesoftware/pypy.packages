@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>PyPy - packages</title>
+
+    <script src="angular.min.js"></script>
+    <script src="angular-route.min.js"></script>
+    <script src="app.js"></script>
+
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  </head>
+
+  <body ng-controller="main">
+
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="inner cover">
+            <h1 class="cover-heading">PyPy's Python packages compatibility</h1>
+
+	    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Pypy_logo.png"/>
+	    
+            <p class="lead">
+	      Cover is a one-page template for building simple and beautiful home pages.
+	      Download, edit the text,
+	      and add your own fullscreen background photo to make it your own.
+	    </p>
+
+	    <div class="list-group">
+	      <a href="" class="list-group-item" ng-repeat="item in packages" ng-class="{'list-group-item-danger': item[1].status != 0}">
+		<h4 class="list-group-item-heading" ng-click="show(item)">
+		  {{ item[0] }}
+		  <span class="badge">OK: {{ item[1].status == 0 }}</span>
+		  <span class="badge pull-right">{{ item[1].count }}</span>
+		</h4>
+		<pre ng-show="item[1].show" class="list-group-item-text">{{ item[1].log }}</pre>
+	      </a>
+	    </div>
+	  </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </body>
+</html>
