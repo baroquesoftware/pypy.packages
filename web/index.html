@@ -10,11 +10,17 @@
 
     <title>PyPy - packages</title>
 
-    <script src="angular.min.js"></script>
-    <script src="angular-route.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
+    <!-- <script src="angular.min.js"></script> -->
+    <!-- <script src="angular-route.min.js"></script> -->
     <script src="app.js"></script>
 
+    <link href="//cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css" rel="stylesheet">
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
     <link href="custom.css" rel="stylesheet">
 
   </head>
@@ -23,33 +29,56 @@
     <div class="container">
 
       <div class="text-center">
-	   <h1 class="cover-heading">PyPy's Python packages compatibility</h1>
-	   
-	   <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Pypy_logo.png"/>
+	<h1 class="cover-heading">PyPy's Python packages compatibility</h1>
+
+	<img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Pypy_logo.png"/>
       </div>
-    
+
       <p class="lead">
 	<a href="http://pypy.org/">PyPy</a> is a <a href="http://speed.pypy.org">fast</a>,
 	<a href="http://pypy.org/compat.html">compliant</a> alternative implementation of the Python language.
 	Nearly all Python packages install properly on PyPy. This page shows what happens
-	when you use pip to install the 1000 most-downloaded package from pypi.python.org.	
+	when you use pip to install the 1000 most-downloaded package from pypi.python.org.
 	This list is done automatically, however we can make manual overrides as well as add
         additional info and install additional packages. Issue a
 	<a href="https://github.com/baroquesoftware/pypy.packages">pull request</a> or get in touch using
 	<a href="mailto:contact@baroquesoftware.com">email</a>.
       </p>
 
-      <div class="list-group">
-	<div href="" class="list-group-item" ng-repeat="item in packages" 
-	     ng-class="{'list-group-item-success': item[1].status == 0, 'list-group-item-danger': item[1].status != 0}">
-	  <h4 class="list-group-item-heading" ng-click="show(item)">
-	    {{ item[0] }}
-	    <span class="badge pull-right">downloads: {{ item[1].count }}</span>
-	  </h4>
-	  <pre ng-show="item[1].show" class="list-group-item-text">{{ item[1].log }}</pre>
-	</div>
-      </div>
+
+      <table id="ptable" class="table table-striped" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+            <th>Package</th>
+            <th>Downloads</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>Package</th>
+            <th>Downloads</th>
+            <th>Status</th>
+          </tr>
+        </tfoot>
+      </table>
+
     </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+            <button type="button" class="close"
+		    data-dismiss="modal"
+		    aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Log</h4>
+	  </div>
+	  <textarea id="log-content" class="form-control custom-control" rows="10" style="resize:none"></textarea>
+	</div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
 
   </body>
 </html>
