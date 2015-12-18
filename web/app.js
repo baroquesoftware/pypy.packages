@@ -3,7 +3,7 @@
 /* App Module */
 
 var app = angular.module('app', [
-  'ngRoute',
+  'ngRoute', 'ngSanitize'
 ]);
 
 
@@ -12,9 +12,8 @@ app.controller('main', function ($scope, $http) {
         $scope.packages = response.data;
     });
 
-    $scope.note = function(name) {
-        return notes[name];
-    };
+    // debugger
+    $scope.notes = notes;
 
     $scope.show = function(item) {
         item[1].show = !item[1].show;

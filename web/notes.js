@@ -1,3 +1,3 @@
 var notes = {
-    simplejson: "test"
+    simplejson: "test <b>test</b>"
 };

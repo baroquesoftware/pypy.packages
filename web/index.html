@@ -23,6 +23,7 @@
     
     <script src="angular.min.js"></script>
     <script src="angular-route.min.js"></script>
+    <script src="angular-sanitize.min.js"></script>
     <script src="notes.js"></script>
     <script src="app.js"></script>
 
@@ -59,7 +60,10 @@
 	    <span class="badge pull-right">downloads: {{ item[1].count }}</span>
 	  </h4>
 
-	  <i ng-if="note(item[0])"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> {{ note(item[0]) }}</i>
+	  <i ng-if="notes[item[0]]">
+	    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+	    <span ng-bind-html="notes[item[0]]"></span>
+	  </i>
 	  <pre ng-show="item[1].show" class="list-group-item-text">{{ item[1].log }}</pre>
 	</div>
       </div>
