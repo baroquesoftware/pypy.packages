@@ -59,10 +59,8 @@
 	    <span class="badge pull-right">downloads: {{ item[1].count }}</span>
 	  </h4>
 
-	  <i>{{ note(item[0]) }}</i>
-	  <pre ng-show="item[1].show" class="list-group-item-text">
-	    {{ item[1].log }}
-	  </pre>
+	  <i ng-if="note(item[0])"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> {{ note(item[0]) }}</i>
+	  <pre ng-show="item[1].show" class="list-group-item-text">{{ item[1].log }}</pre>
 	</div>
       </div>
     </div>
