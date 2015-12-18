@@ -13,7 +13,7 @@ img {
 }
 
 .list-group-item-heading:hover {
-	color: #123444;
+	color: #444;
 }
 pre {
 	cursor: default;
