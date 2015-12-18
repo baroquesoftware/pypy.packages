@@ -7,7 +7,7 @@ RUN apt-get install -y wget
 RUN apt-get install -y gcc g++ make
 
 RUN apt-get install -y libssl-dev
-RUN apt-get install -y libxml2-dev libxslt-dev # lxml
+RUN apt-get install -y libxml2-dev libxslt-dev cython # lxml
 RUN apt-get install -y libpq-dev # psycopg2
 RUN apt-get install -y libjpeg-dev # pillow
 RUN apt-get install -y libcurl4-openssl-dev # pycurl
