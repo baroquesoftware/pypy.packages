@@ -9,8 +9,12 @@ var app = angular.module('app', [
 
 app.controller('main', function ($scope, $http) {
     $http.get('logs/index.json').then(function(response) {
-       $scope.packages = response.data;
+        $scope.packages = response.data;
     });
+
+    $scope.note = function(name) {
+        return notes[name];
+    };
 
     $scope.show = function(item) {
         item[1].show = !item[1].show;
@@ -21,3 +25,4 @@ app.controller('main', function ($scope, $http) {
         });
     };
 });
+

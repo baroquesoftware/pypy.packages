@@ -1,0 +1,3 @@
+var notes = {
+    simplejson: "test"
+};

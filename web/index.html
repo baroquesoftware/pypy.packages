@@ -23,6 +23,7 @@
     
     <script src="angular.min.js"></script>
     <script src="angular-route.min.js"></script>
+    <script src="notes.js"></script>
     <script src="app.js"></script>
 
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -57,7 +58,11 @@
 	    {{ item[0] }}
 	    <span class="badge pull-right">downloads: {{ item[1].count }}</span>
 	  </h4>
-	  <pre ng-show="item[1].show" class="list-group-item-text">{{ item[1].log }}</pre>
+
+	  <i>{{ note(item[0]) }}</i>
+	  <pre ng-show="item[1].show" class="list-group-item-text">
+	    {{ item[1].log }}
+	  </pre>
 	</div>
       </div>
     </div>
