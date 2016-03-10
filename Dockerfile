@@ -21,14 +21,8 @@ RUN apt-get install -y libmysqlclient-dev # tiddlywebplugins.tiddlyspace
 RUN apt-get install -y freetds-dev # pymssql
 
 
-RUN add-apt-repository ppa:pypy/ppa
-
-RUN apt-get -y update
-
-RUN apt-get install -y pypy
-RUN apt-get install -y pypy-dev
+RUN wget https://bitbucket.org/pypy/pypy/downloads/pypy-5.0.0-linux64.tar.bz2
+RUN tar xvjf pypy-5.0.0-linux64.tar.bz2
 
 RUN wget https://bootstrap.pypa.io/get-pip.py
-RUN pypy get-pip.py
-
-# docker run -v /vagrant/pippache:/pipcache pypyspace pypy -m pip --cache-dir=/pipcache install django
+RUN pypy-5.0.0-linux64/bin/pypy get-pip.py
