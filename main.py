@@ -14,7 +14,7 @@ DOWNLOAD_PROCESSES = 10
 
 def thing(args):
     name, count = args
-    p = subprocess.Popen('docker run -v %s:/pipcache pypyspace pypy -m pip --cache-dir=/pipcache install %s' % (PIP_CACHE, name),
+    p = subprocess.Popen('docker run -v %s:/pipcache pypyspace pypy-5.0.0-linux64/bin/pypy -m pip --cache-dir=/pipcache install %s' % (PIP_CACHE, name),
                          shell=True,
                          stdout=subprocess.PIPE,
                          stderr=subprocess.STDOUT)
