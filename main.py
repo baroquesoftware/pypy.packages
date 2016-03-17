@@ -9,7 +9,7 @@ import xmlrpclib
 PYPI = xmlrpclib.ServerProxy('https://pypi.python.org/pypi')
 PATH = "/tmp/pypy.space"
 PIP_CACHE = "/tmp/pipcache"
-DOWNLOAD_PROCESSES = 10
+DOWNLOAD_PROCESSES = 50
 
 
 def thing(args):

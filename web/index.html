@@ -20,7 +20,7 @@
       ga('send', 'pageview');
 
     </script>
-    
+
     <script src="angular.min.js"></script>
     <script src="angular-route.min.js"></script>
     <script src="angular-sanitize.min.js"></script>
@@ -37,23 +37,27 @@
 
       <div class="text-center">
 	   <h1 class="cover-heading">PyPy's Python packages compatibility</h1>
-	   
+
 	   <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Pypy_logo.png"/>
       </div>
-    
+
       <p class="lead">
 	<a href="http://pypy.org/">PyPy</a> is a <a href="http://speed.pypy.org">fast</a>,
 	<a href="http://pypy.org/compat.html">compliant</a> alternative implementation of the Python language.
 	Nearly all Python packages install properly on PyPy. This page shows what happens
-	when you use pip to install the 1000 most-downloaded package from pypi.python.org.	
+	when you use pip to install the 1000 most-downloaded package from pypi.python.org.
 	This list is done automatically, however we can make manual overrides as well as add
         additional info and install additional packages. Issue a
 	<a href="https://github.com/baroquesoftware/pypy.packages">pull request</a> or get in touch using
 	<a href="mailto:contact@baroquesoftware.com">email</a>.
       </p>
 
+      <hr>
+      <h4 class="text-center">PyPy 5.0 / 10th March 2016 </h4>
+      <hr>
+
       <div class="list-group">
-	<div href="" class="list-group-item" ng-repeat="item in packages" 
+	<div href="" class="list-group-item" ng-repeat="item in packages"
 	     ng-class="{'list-group-item-success': item[1].status == 0, 'list-group-item-danger': item[1].status != 0}">
 	  <h4 class="list-group-item-heading" ng-click="show(item)">
 	    {{ item[0] }}
