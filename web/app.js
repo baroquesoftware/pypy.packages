@@ -7,12 +7,14 @@ var app = angular.module('app', [
 ]);
 
 
-app.controller('main', function ($scope, $http) {
+app.controller('main', function ($scope, $http, $location, $timeout, $anchorScroll) {
     $http.get('logs/index.json').then(function(response) {
         $scope.packages = response.data;
+        $timeout(function() {
+            $anchorScroll();
+        });
     });
 
-    // debugger
     $scope.notes = notes;
 
     $scope.show = function(item) {
@@ -21,6 +23,7 @@ app.controller('main', function ($scope, $http) {
             cache: false
         }).then(function(response) {
             item[1].log = response.data;
+            $location.hash(item[0]);
         });
     };
 });

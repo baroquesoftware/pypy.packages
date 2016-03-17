@@ -59,7 +59,7 @@
       <div class="list-group">
 	<div href="" class="list-group-item" ng-repeat="item in packages"
 	     ng-class="{'list-group-item-success': item[1].status == 0, 'list-group-item-danger': item[1].status != 0}">
-	  <h4 class="list-group-item-heading" ng-click="show(item)">
+	  <h4 id="{{ item[0] }}" class="list-group-item-heading" ng-click="show(item)">
 	    {{ item[0] }}
 	    <span class="badge pull-right">downloads: {{ item[1].count }}</span>
 	  </h4>
