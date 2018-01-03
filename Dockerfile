@@ -20,8 +20,12 @@ RUN apt-get install -y libgeos-dev # Shapely
 RUN apt-get install -y libmemcached-dev # pylibmc
 RUN apt-get install -y libmysqlclient-dev # tiddlywebplugins.tiddlyspace
 RUN apt-get install -y freetds-dev # pymssql
-RUN apt-get install -y libblas-dev liblapack-dev gfortran
-RUN apt-get install -y vim
+RUN apt-get install -y libblas-dev liblapack-dev gfortran # numpy
+
+# Matplotlib. See https://github.com/matplotlib/matplotlib/issues/3029
+RUN apt-get install -y libfreetype6-dev
+RUN apt-get install -y pkg-config
+RUN ln -s /usr/include/freetype2/ft2build.h /usr/include/
 
 WORKDIR /root
 
@@ -29,3 +33,4 @@ RUN wget ${PYPY2_PACKAGE_URL} -nv -O - | tar xj
 
 RUN ln -s $(python -c 'import os; print(os.path.basename(os.environ["PYPY2_PACKAGE_URL"]).rsplit(".", 2)[0])') pypy_install
 RUN pypy_install/bin/virtualenv-pypy pypy_venv
+RUN echo "source pypy_venv/bin/activate" >> ~/.bashrc

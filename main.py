@@ -1,35 +1,55 @@
-from multiprocessing import Pool
+from __future__ import print_function
 
 import argparse
-import subprocess
-import os
 import json
+import os
 import shutil
+import subprocess
 import xmlrpclib
+from multiprocessing.dummy import Pool
 
 PYPI = xmlrpclib.ServerProxy('https://pypi.python.org/pypi')
 PATH = "/tmp/pypy.space"
 PIP_CACHE = "/tmp/pipcache"
-DOWNLOAD_PROCESSES = 50
+REQUIREMENTS_DIR = 'requirements'
+REQUIREMENTS_HOST_DIR = os.path.join(os.getcwd(), REQUIREMENTS_DIR)
+REQUIREMENTS_CONTAINER_DIR = os.path.join('/root', REQUIREMENTS_DIR)
 
+BASE_DOCKER_COMMAND = [
+    'docker', 'run',
+    '-v', '{}:{}'.format(
+        REQUIREMENTS_HOST_DIR, REQUIREMENTS_CONTAINER_DIR),
+    '-v', '{}:/pipcache'.format(PIP_CACHE),
+    'pypypackages_pypy:latest'
+]
+BASE_PIP_CMD = ['pip', '--cache-dir=/pipcache', 'install']
 
 def thing(args):
     name, count = args
-    p = subprocess.Popen('docker run -v %s:/pipcache pypypackages_pypy:latest pypy_venv/bin/pip --cache-dir=/pipcache install %s' % (PIP_CACHE, name),
-                         shell=True,
+    requirements_file = os.path.join('requirements', name)
+    if os.path.isfile(requirements_file):
+        pip_cmd = BASE_PIP_CMD + ['-r', requirements_file]
+    else:
+        pip_cmd = BASE_PIP_CMD + [name]
+    p = subprocess.Popen(BASE_DOCKER_COMMAND + pip_cmd,
                          stdout=subprocess.PIPE,
                          stderr=subprocess.STDOUT)
     stdout, _ = p.communicate()
 
-    print "=" * 30, name, p.returncode, "=" * 30
-    print stdout
+    print("=" * 30, name, p.returncode, "=" * 30)
+    print(stdout)
 
     return name, p.returncode, stdout, count
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-f','--filter', nargs='*', help='Filter to these packages')
+    parser.add_argument(
+        '--parallel', help='Number of concurrent processes', type=int,
+        default=50)
+    parser.add_argument(
+        '--filter', nargs='*',
+        help='Filter to these packages')
     args = parser.parse_args()
 
     if os.path.exists(PATH):
@@ -37,7 +57,7 @@ def main():
 
     os.makedirs(PATH)
 
-    pool = Pool(processes=DOWNLOAD_PROCESSES)
+    pool = Pool(processes=args.parallel)
     top_packages = PYPI.top_packages(1000)
     if args.filter:
         filter_ = {p for p in args.filter}
