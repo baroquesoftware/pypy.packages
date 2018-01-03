@@ -22,7 +22,7 @@ BASE_DOCKER_COMMAND = [
     '-v', '{}:/pipcache'.format(PIP_CACHE),
     'pypypackages_pypy:latest'
 ]
-BASE_PIP_CMD = ['pip', '--cache-dir=/pipcache', 'install']
+BASE_PIP_CMD = ['pypy_venv/bin/pip', '--cache-dir=/pipcache', 'install']
 
 def thing(args):
     name, count = args
