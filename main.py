@@ -15,6 +15,8 @@ REQUIREMENTS_DIR = 'requirements'
 REQUIREMENTS_HOST_DIR = os.path.join(os.getcwd(), REQUIREMENTS_DIR)
 REQUIREMENTS_CONTAINER_DIR = os.path.join('/root', REQUIREMENTS_DIR)
 
+virtualenv_name = None
+
 BASE_DOCKER_COMMAND = [
     'docker', 'run',
     '-v', '{}:{}'.format(
@@ -22,15 +24,18 @@ BASE_DOCKER_COMMAND = [
     '-v', '{}:/pipcache'.format(PIP_CACHE),
     'pypypackages_pypy:latest'
 ]
-BASE_PIP_CMD = ['pypy_venv/bin/pip', '--cache-dir=/pipcache', 'install']
 
 def thing(args):
     name, count = args
+    base_pip_cmd = [
+        os.path.join(virtualenv_name, 'bin/pip'),
+        '--cache-dir=/pipcache',
+        'install']
     requirements_file = os.path.join('requirements', name)
     if os.path.isfile(requirements_file):
-        pip_cmd = BASE_PIP_CMD + ['-r', requirements_file]
+        pip_cmd = base_pip_cmd + ['-r', requirements_file]
     else:
-        pip_cmd = BASE_PIP_CMD + [name]
+        pip_cmd = base_pip_cmd + [name]
     p = subprocess.Popen(BASE_DOCKER_COMMAND + pip_cmd,
                          stdout=subprocess.PIPE,
                          stderr=subprocess.STDOUT)
@@ -43,6 +48,7 @@ def thing(args):
 
 
 def main():
+    global virtualenv_name
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '--parallel', help='Number of concurrent processes', type=int,
@@ -50,7 +56,11 @@ def main():
     parser.add_argument(
         '--filter', nargs='*',
         help='Filter to these packages')
+    parser.add_argument(
+        '--virtualenv', default='pypy3_venv',
+        help='Python virtualenv for package installation')
     args = parser.parse_args()
+    virtualenv_name = args.virtualenv
 
     if os.path.exists(PATH):
         shutil.rmtree(PATH)

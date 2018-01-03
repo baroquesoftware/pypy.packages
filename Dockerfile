@@ -1,6 +1,7 @@
 FROM ubuntu
 
-ARG PYPY2_PACKAGE_URL=https://bitbucket.org/squeaky/portable-pypy/downloads/pypy3.5-5.10.0-linux_x86_64-portable.tar.bz2
+ARG PYPY2_PACKAGE_URL=https://bitbucket.org/squeaky/portable-pypy/downloads/pypy-5.10.0-linux_x86_64-portable.tar.bz2
+ARG PYPY3_PACKAGE_URL=https://bitbucket.org/squeaky/portable-pypy/downloads/pypy3.5-5.10.0-linux_x86_64-portable.tar.bz2
 RUN apt-get -y update
 
 RUN apt-get install -y software-properties-common
@@ -30,7 +31,11 @@ RUN ln -s /usr/include/freetype2/ft2build.h /usr/include/
 WORKDIR /root
 
 RUN wget ${PYPY2_PACKAGE_URL} -nv -O - | tar xj
+RUN ln -s $(python -c 'import os; print(os.path.basename(os.environ["PYPY2_PACKAGE_URL"]).rsplit(".", 2)[0])') pypy2_install
+RUN pypy2_install/bin/virtualenv-pypy pypy2_venv
 
-RUN ln -s $(python -c 'import os; print(os.path.basename(os.environ["PYPY2_PACKAGE_URL"]).rsplit(".", 2)[0])') pypy_install
-RUN pypy_install/bin/virtualenv-pypy pypy_venv
-RUN echo "source pypy_venv/bin/activate" >> ~/.bashrc
+RUN wget ${PYPY3_PACKAGE_URL} -nv -O - | tar xj
+RUN ln -s $(python -c 'import os; print(os.path.basename(os.environ["PYPY3_PACKAGE_URL"]).rsplit(".", 2)[0])') pypy3_install
+RUN pypy3_install/bin/virtualenv-pypy pypy3_venv
+
+RUN echo "source pypy_venv3/bin/activate" >> ~/.bashrc
