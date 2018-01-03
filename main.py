@@ -1,5 +1,6 @@
 from multiprocessing import Pool
 
+import argparse
 import subprocess
 import os
 import json
@@ -14,7 +15,7 @@ DOWNLOAD_PROCESSES = 50
 
 def thing(args):
     name, count = args
-    p = subprocess.Popen('docker run -v %s:/pipcache pypyspace pypy-5.0.0-linux64/bin/pypy -m pip --cache-dir=/pipcache install %s' % (PIP_CACHE, name),
+    p = subprocess.Popen('docker run -v %s:/pipcache pypypackages_pypy:latest pypy_venv/bin/pip --cache-dir=/pipcache install %s' % (PIP_CACHE, name),
                          shell=True,
                          stdout=subprocess.PIPE,
                          stderr=subprocess.STDOUT)
@@ -26,7 +27,10 @@ def thing(args):
     return name, p.returncode, stdout, count
 
 
-if __name__ == '__main__':
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-f','--filter', nargs='*', help='Filter to these packages')
+    args = parser.parse_args()
 
     if os.path.exists(PATH):
         shutil.rmtree(PATH)
@@ -34,7 +38,11 @@ if __name__ == '__main__':
     os.makedirs(PATH)
 
     pool = Pool(processes=DOWNLOAD_PROCESSES)
-    results = pool.map(thing, PYPI.top_packages(1000))
+    top_packages = PYPI.top_packages(1000)
+    if args.filter:
+        filter_ = {p for p in args.filter}
+        top_packages = [p for p in top_packages if p[0] in filter_]
+    results = pool.map(thing, top_packages)
     pool.close()
     pool.join()
 
@@ -51,3 +59,6 @@ if __name__ == '__main__':
                              "log": output_log}))
 
     json.dump(index, open(os.path.join(PATH, "index.json"), 'w'), indent=2)
+
+if __name__ == '__main__':
+    main()

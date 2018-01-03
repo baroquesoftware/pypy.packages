@@ -1,5 +1,6 @@
 FROM ubuntu
 
+ARG PYPY2_PACKAGE_URL=https://bitbucket.org/squeaky/portable-pypy/downloads/pypy3.5-5.10.0-linux_x86_64-portable.tar.bz2
 RUN apt-get -y update
 
 RUN apt-get install -y software-properties-common
@@ -19,10 +20,12 @@ RUN apt-get install -y libgeos-dev # Shapely
 RUN apt-get install -y libmemcached-dev # pylibmc
 RUN apt-get install -y libmysqlclient-dev # tiddlywebplugins.tiddlyspace
 RUN apt-get install -y freetds-dev # pymssql
+RUN apt-get install -y libblas-dev liblapack-dev gfortran
+RUN apt-get install -y vim
 
+WORKDIR /root
 
-RUN wget https://bitbucket.org/pypy/pypy/downloads/pypy-5.0.0-linux64.tar.bz2
-RUN tar xvjf pypy-5.0.0-linux64.tar.bz2
+RUN wget ${PYPY2_PACKAGE_URL} -nv -O - | tar xj
 
-RUN wget https://bootstrap.pypa.io/get-pip.py
-RUN pypy-5.0.0-linux64/bin/pypy get-pip.py
+RUN ln -s $(python -c 'import os; print(os.path.basename(os.environ["PYPY2_PACKAGE_URL"]).rsplit(".", 2)[0])') pypy_install
+RUN pypy_install/bin/virtualenv-pypy pypy_venv
