@@ -19,6 +19,7 @@ RUN apt-get install -y libgeos-dev # Shapely
 RUN apt-get install -y libmemcached-dev # pylibmc
 RUN apt-get install -y libmysqlclient-dev # tiddlywebplugins.tiddlyspace
 RUN apt-get install -y freetds-dev # pymssql
+RUN apt-get install -y hdf5-tools libhdf5-dev # h5py
 
 
 RUN wget https://bitbucket.org/pypy/pypy/downloads/pypy-5.0.0-linux64.tar.bz2
