@@ -1,7 +1,7 @@
 FROM ubuntu
 
-ARG PYPY2_PACKAGE_URL=https://bitbucket.org/squeaky/portable-pypy/downloads/pypy-5.10.0-linux_x86_64-portable.tar.bz2
-ARG PYPY3_PACKAGE_URL=https://bitbucket.org/squeaky/portable-pypy/downloads/pypy3.5-5.10.0-linux_x86_64-portable.tar.bz2
+ARG PYPY2_PACKAGE_URL=https://bitbucket.org/squeaky/portable-pypy/downloads/pypy-7.0.0-linux_x86_64-portable.tar.bz2
+ARG PYPY3_PACKAGE_URL=https://bitbucket.org/squeaky/portable-pypy/downloads/pypy3.6-7.0.0-alpha-20190209-linux_x86_64-portable.tar.bz2
 RUN apt-get -y update
 
 RUN apt-get install -y software-properties-common
