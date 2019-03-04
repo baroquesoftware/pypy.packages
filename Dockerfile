@@ -14,7 +14,7 @@ RUN apt-get install -y libpq-dev # psycopg2
 RUN apt-get install -y libjpeg-dev # pillow
 RUN apt-get install -y libcurl4-openssl-dev # pycurl
 RUN apt-get install -y libcups2-dev # pycups
-RUN apt-get install -y libpng12-dev libfreetype6-dev # matplotlib
+RUN apt-get install -y libpng-dev libfreetype6-dev # matplotlib
 RUN apt-get install -y swig # M2crypto
 RUN apt-get install -y libsasl2-dev  libldap2-dev # python-ldap
 RUN apt-get install -y libgeos-dev # Shapely

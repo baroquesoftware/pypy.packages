@@ -27,6 +27,7 @@ BASE_DOCKER_COMMAND = [
 
 def thing(args):
     name, count = args
+    print("=" * 30, name, 'starting pip install', '='*30)
     base_pip_cmd = [
         os.path.join(virtualenv_name, 'bin/pip'),
         '--cache-dir=/pipcache',
@@ -68,13 +69,33 @@ def main():
     os.makedirs(PATH)
 
     pool = Pool(processes=args.parallel)
-    top_packages = PYPI.top_packages(1000)
+    top_packages = []
+
+    with open('downloads.csv', 'rt') as fid:
+        for line in fid:
+            try:
+                vals = line.split(',')
+                top_packages.append((vals[0], int(vals[1])))
+            except:
+                continue
     if args.filter:
         filter_ = {p for p in args.filter}
         top_packages = [p for p in top_packages if p[0] in filter_]
     results = pool.map(thing, top_packages)
     pool.close()
     pool.join()
+
+    p = subprocess.Popen(BASE_DOCKER_COMMAND + [
+                        os.path.join(virtualenv_name, 'bin/python'), '-c',
+                        "import sys, %s; print(sys.version)" % (top_packages[-1][0],),],
+                         stdout=subprocess.PIPE,
+                         stderr=subprocess.STDOUT)
+    stdout, stderr = p.communicate()
+
+    print("=" * 30, 'python', "=" * 30)
+    print(stdout)
+    print(stderr)
+    print("=" * 30, 'python', "=" * 30)
 
     index = []
 
