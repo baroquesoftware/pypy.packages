@@ -19,6 +19,9 @@ virtualenv_name = None
 
 BASE_DOCKER_COMMAND = [
     'docker', 'run',
+    '-e' 'LC_CTYPE=en_US.UTF8',
+    '-e' 'LANG=en_US.UTF8',
+    '-e' 'LANGUAGE=en_US.UTF8',
     '-v', '{}:{}'.format(
         REQUIREMENTS_HOST_DIR, REQUIREMENTS_CONTAINER_DIR),
     '-v', '{}:/pipcache'.format(PIP_CACHE),
@@ -87,7 +90,7 @@ def main():
 
     p = subprocess.Popen(BASE_DOCKER_COMMAND + [
                         os.path.join(virtualenv_name, 'bin/python'), '-c',
-                        "import sys, %s; print(sys.version)" % (top_packages[-1][0],),],
+                        "import sys, os; print(sys.version);"],
                          stdout=subprocess.PIPE,
                          stderr=subprocess.STDOUT)
     stdout, stderr = p.communicate()
