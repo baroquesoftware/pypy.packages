@@ -1,0 +1,9 @@
+version: "2"
+
+services:
+  pypy:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    entrypoint: /bin/bash
+    tty: true
